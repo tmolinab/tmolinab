@@ -3,7 +3,7 @@
 import streamlit as st
 
 st.title("B-phages")
-st.image("_MG_1613.jpg")
+st.image("bacteria.webp")
 st.header("Tu salud, nuestro compromiso")
 st.write("Queremos darte el mejor de los tratamientos contra las infecciones por bacterias multiresistentes")
 st.write("Somos los mejores")
@@ -16,24 +16,24 @@ with st.container():
     with ana_column:
 
         st.write("Ana Maria Ruiz León")
-        st.image("_MG_1613.jpg")
+        st.image("bacteria.webp")
         st.write("Gerente de la empresa")
         st.write("[Conoce más de Ana](https://co.linkedin.com/)")
         
         with carolina_column:
             st.write("Diana Carolina Giralda Valderrama")
-            st.image("_MG_1613.jpg")
+            st.image("bacteria.webp")
             st.write("Jefe de Mercadeo de la empresa")
             st.write("[Conoce más de Carolina](https://co.linkedin.com/)")
             
             with tomas_column:
                 st.write("Tomas Molina Benjumea")
-                st.image("_MG_1613.jpg")
+                st.image("bacteria.webp")
                 st.write("Jefe de Calidad de la empresa")
                 st.write("[Conoce más de Tomas](https://co.linkedin.com/)")
                 with anderson_column:
                     st.write("Anderson Stiward González Rivera")
-                    st.image("_MG_1613.jpg")
+                    st.image("bacteria.webp")
                     st.write("Jefe de talento humano de la empresa")
                     st.write("[Conoce más de Anderson](https://co.linkedin.com/)")
 
@@ -105,7 +105,7 @@ with st.container():
     i_column, w_column, c_column, y_column = st.columns(4)
     with i_column:
         st.write("Instagram")
-        st.image("_MG_1613.jpg")
+        st.image("bacteria.webp")
         with w_column:
             st.write("WhatsApp")
-            st.image("_MG_1613.jpg")
+            st.image("bacteria.webp")
