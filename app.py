@@ -1,111 +1,58 @@
-# Local URL: http://localhost:8501 Network URL: http://192.168.1.2:8501
-# pagina: https://share.streamlit.io/andersonstiwardgonzalez/b-phages/main/app.py
+import collections
+from numpy.core.defchararray import lower
 import streamlit as st
+import numpy as np
+import pandas as pd
+from pages import utils
 
-st.title("B-phages")
-st.image("matrix-356024_960_720.webp")
-st.header("Tu salud, nuestro compromiso")
-st.write("Queremos darte el mejor de los tratamientos contra las infecciones por bacterias multiresistentes")
-st.write("Somos los mejores")
-st.write("[Aprende más de como ser cool --->](https://www.youtube.com/watch?v=VqgUkExPvLY)")
 
-with st.container():
-    st.write("---")
-    st.title("Equipo de trabajo")
-    ana_column, carolina_column, tomas_column, anderson_column = st.columns(4)
-    with ana_column:
+def app():
+    st.markdown("## Data Upload")
 
-        st.write("Ana Maria Ruiz León")
-        st.image("matrix-356024_960_720.webp")
-        st.write("Gerente de la empresa")
-        st.write("[Conoce más de Ana](https://co.linkedin.com/)")
+    # Upload the dataset and save as csv
+    st.markdown("### Upload a csv file for analysis.") 
+    st.write("\n")
+
+    # Code to read a single file 
+    uploaded_file = st.file_uploader("Choose a file", type = ['csv', 'xlsx'])
+    global data
+    if uploaded_file is not None:
+        try:
+            data = pd.read_csv(uploaded_file)
+        except Exception as e:
+            print(e)
+            data = pd.read_excel(uploaded_file)
+
+
+    ''' Load the data and save the columns with categories as a dataframe. 
+    This section also allows changes in the numerical and categorical columns. '''
+    if st.button("Load Data"):
         
-        with carolina_column:
-            st.write("Diana Carolina Giralda Valderrama")
-            st.image("matrix-356024_960_720.webp")
-            st.write("Jefe de Mercadeo de la empresa")
-            st.write("[Conoce más de Carolina](https://co.linkedin.com/)")
-            
-            with tomas_column:
-                st.write("Tomas Molina Benjumea")
-                st.image("matrix-356024_960_720.webp")
-                st.write("Jefe de Calidad de la empresa")
-                st.write("[Conoce más de Tomas](https://co.linkedin.com/)")
-                with anderson_column:
-                    st.write("Anderson Stiward González Rivera")
-                    st.image("matrix-356024_960_720.webp")
-                    st.write("Jefe de talento humano de la empresa")
-                    st.write("[Conoce más de Anderson](https://co.linkedin.com/)")
+        # Raw data 
+        st.dataframe(data)
+        data.to_csv('data/main_data.csv', index=False)
 
+        # Collect the categorical and numerical columns 
+        
+        numeric_cols = data.select_dtypes(include=np.number).columns.tolist()
+        categorical_cols = list(set(list(data.columns)) - set(numeric_cols))
+        
+        # Save the columns as a dataframe or dictionary
+        columns = []
 
-with st.container():
-    st.write("---")
-    st.write("[B-phages](https://www.youtube.com/)")
+        # Iterate through the numerical and categorical columns and save in columns 
+        columns = utils.genMetaData(data) 
+        
+        # Save the columns as a dataframe with categories
+        # Here column_name is the name of the field and the type is whether it's numerical or categorical
+        columns_df = pd.DataFrame(columns, columns = ['column_name', 'type'])
+        columns_df.to_csv('data/metadata/column_type_desc.csv', index = False)
 
-with st.container():
-    st.write("---")
-    st.title("Misión")
-    st.write("Somos una empresa de base biotecnológica comprometida con la salud pública. Buscamos generar tratamientos efectivos para infecciones bacterianas mediante el uso de la medicina personalizada con bacteriófagos. Estamos interesados en mitigar la problemática causada por la resistencia a los antibióticos, apoyándonos en nuevas tecnologías que nos permitan tener un buen acompañamiento y la mejor atención a nuestros usuarios. Trabajamos de la mano de la bioética con valores que reafirman nuestro compromiso como son la calidad, el respeto y la honestidad.")
-    st.title("Visión")
-    st.write("Para el año 2032 nos proyectamos como una empresa independiente, posicionada en el mercado colombiano, con miras hacia un reconocimiento internacional en la industria biotecnológica enfocada a la medicina personalizada, siendo pioneros en latinoamérica en el tratamiento de infecciones bacterianas y respetando los fundamentos éticos que nos permitieron un reconocimiento en el territorio nacional.")
+        # Display columns 
+        st.markdown("**Column Name**-**Type**")
+        for i in range(columns_df.shape[0]):
+            st.write(f"{i+1}. **{columns_df.iloc[i]['column_name']}** - {columns_df.iloc[i]['type']}")
+        
+        st.markdown("""The above are the automated column types detected by the application in the data. 
+        In case you wish to change the column types, head over to the **Column Change** section. """)
 
-with st.container():
-    st.write("---")
-    st.title("Principios y valores")
-    st.write("misionintesrtezasfsfs")
-
-with st.container():
-    st.write("---")
-    st.title("Código CIIU")
-    st.write("misionintesrtezasfsfs")
-
-with st.container():
-    st.write("---")
-    st.title("Lienzo de canvas")
-    st.write("misionintesrtezasfsfs")
-
-with st.container():
-    st.write("---")
-    st.title("Análisis del sector")
-    st.write("misionintesrtezasfsfs")
-
-with st.container():
-    st.write("---")
-    st.title("Matriz D.O.F.A")
-    st.write("misionintesrtezasfsfs")
-
-with st.container():
-    st.write("---")
-    st.title("Productos")
-    st.write("misionintesrtezasfsfs")
-
-with st.container():
-    st.write("---")
-    st.title("Competencia: Modelo de Porter")
-    st.write("misionintesrtezasfsfs")
-
-with st.container():
-    st.write("---")
-    st.title("Plan de mercadeo 4ps")
-    st.write("misionintesrtezasfsfs")
-
-with st.container():
-    st.write("---")
-    st.title("Plan financiero")
-    st.write("misionintesrtezasfsfs")
-
-with st.container():
-    st.write("---")
-    st.title("Impactos sociales y externalidades")
-    st.write("misionintesrtezasfsfs")
-
-with st.container():
-    st.write("---")
-    st.title("¡Contáctanos!")
-    i_column, w_column, c_column, y_column = st.columns(4)
-    with i_column:
-        st.write("Instagram")
-        st.image("matrix-356024_960_720.webp")
-        with w_column:
-            st.write("WhatsApp")
-            st.image("matrix-356024_960_720.webp")
